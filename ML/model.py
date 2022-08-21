@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel, cosine_similarity
 
-df = pd.read_csv('data\dataset.csv')
+df = pd.read_csv('ML/data/dataset.csv')
 title_list = df['Title'].tolist()
 description_list = df['Description'].tolist()
 keywords_list = df['Keywords'].tolist()
