@@ -39,5 +39,5 @@ def get_kw(title, num = 5):
     titles = list((itemgetter(*res_indices)(title_list)))
     return titles
 
-print(get_tfidf('Mastering Immutable.js',3))
-print(get_kw('Mastering Immutable.js',3))
+print(get_tfidf('Building an FPS Game with Unity',3))
+print(get_kw('Building an FPS Game with Unity',3))
