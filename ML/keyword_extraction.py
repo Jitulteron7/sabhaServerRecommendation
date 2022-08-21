@@ -12,5 +12,3 @@ def kw_extractor(full_text):
     return kw
 
 
-
-sys.modules[__name__] = kw_extractor

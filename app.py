@@ -1,21 +1,11 @@
 from flask import Flask,request
 import yake
 import sys
+from ML.model import get_tfidf, get_kw
+from ML.keyword_extraction import kw_extractor
+
 
 app = Flask(__name__)
-
-
-
-# text = """
-# A large black mongrel named Rowf and a white terrier named Snitter escape from an animal experiment center in England's Lake District and, aided by a cunning fox, learn to live on their own, until rumors of slaughtered sheep and bubonic plague-carrying dogs transform them into fugitives. Reprint. 15,000 first printing.
-# """
-def kw_extractor(full_text):    
-    print("testing")
-    kw = []
-    custom_kw_extractor = yake.KeywordExtractor(n=1, top=3)
-    keywords = custom_kw_extractor.extract_keywords(full_text)
-    kw = list(dict(keywords).keys())
-    return kw
 
 
 @app.route("/testing",methods=[ "GET"])
@@ -30,11 +20,31 @@ def keywrod_extraction():
     return kwy_words
 
 
-@app.route("/recommendation",methods=[ "POST"])
-def recommendation():
-    desc = request.get_json()['desc']    
-    kwy_words = kw_extractor(desc);
+#main
+@app.route("/interests",methods=[ "POST"])
+def interests():
+    desc = request.get_json()['desc']
+    name = request.get_json()['name']    
+    get_tfidf()
     return kwy_words
+
+
+
+
+
+@app.route("/recommendation",methods=[ "POST"])
+def recommend_by_us():
+    desc = request.get_json()['descs']
+    name = request.get_json()['name']
+    names = request.get_json()['names']
+    
+    keywords  = request.get_json()['keyWords']    
+    get_tfidf(name)
+    get_kw
+    return kwy_words
+
+
+
 
 
 
