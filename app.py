@@ -20,11 +20,18 @@ def kw_extractor(full_text):
 
 @app.route("/testing",methods=[ "GET"])
 def testing():
-    
     return 'testing working fine'
 
+
 @app.route("/keywords_extraction",methods=[ "POST"])
-def hello():
+def keywrod_extraction():
+    desc = request.get_json()['desc']    
+    kwy_words = kw_extractor(desc);
+    return kwy_words
+
+
+@app.route("/recommendation",methods=[ "POST"])
+def recommendation():
     desc = request.get_json()['desc']    
     kwy_words = kw_extractor(desc);
     return kwy_words
