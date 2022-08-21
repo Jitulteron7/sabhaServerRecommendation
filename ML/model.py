@@ -4,13 +4,13 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel, cosine_similarity
 
-df = pd.read_csv('data/dataset.csv')
+df = pd.read_csv('data\dataset.csv')
 title_list = df['Title'].tolist()
 description_list = df['Description'].tolist()
 keywords_list = df['Keywords'].tolist()
 
-def get_tfidf(title, num = 5):
-    idx = title_list.index(title)
+def get_tfidf(idx, num = 5):
+    print(idx,"idx csv")
     description = description_list[idx]
 
     tfidf = TfidfVectorizer(stop_words='english')
@@ -21,11 +21,9 @@ def get_tfidf(title, num = 5):
     sim_scores = sorted(sim_scores, key=lambda x:x[1], reverse=True)
     sim_scores = sim_scores[1:num+1]
     res_indices = [i[0] for i in sim_scores]
-    titles = list((itemgetter(*res_indices)(title_list)))
-    return titles
+    return res_indices
 
-def get_kw(title, num = 5):
-    idx = title_list.index(title)
+def get_kw(idx, num = 5):
     keywords = keywords_list[idx]
 
     count = CountVectorizer(stop_words='english')
@@ -36,8 +34,7 @@ def get_kw(title, num = 5):
     sim_scores = sorted(sim_scores, key=lambda x:x[1], reverse=True)
     sim_scores = sim_scores[1:num+1]
     res_indices = [i[0] for i in sim_scores]
-    titles = list((itemgetter(*res_indices)(title_list)))
-    return titles
+    return res_indices
 
-print(get_tfidf('Building an FPS Game with Unity',3))
-print(get_kw('Building an FPS Game with Unity',3))
+print(get_tfidf(342,3))
+print(get_kw(342,3))
