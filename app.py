@@ -1,15 +1,27 @@
+import imp
+import json
 from flask import Flask,request
 import yake
 import sys
-from ML.model import get_tfidf, get_kw
+from ML.model import get_tfidf, get_kw, get_data, get_interests
 from ML.keyword_extraction import kw_extractor
-
+from ML.topic_prediction import predict_topic
+import requests
 
 app = Flask(__name__)
+app.debug = True
 
+f = open("ML\data\dataset.json")
+json_file = json.load(f)
 
-@app.route("/testing",methods=[ "GET"])
+@app.route("/",methods=[ "GET"])
+def test():
+    return 'ml api running sucessfully'
+
+@app.route("/testing",methods=[ "POST"])
 def testing():
+    data = request.get_json()['data']
+    print(data)
     return 'testing working fine'
 
 
@@ -17,36 +29,38 @@ def testing():
 def keywrod_extraction():
     desc = request.get_json()['desc']    
     kwy_words = kw_extractor(desc);
-    return kwy_words
+    topics = predict_topic(desc);
+    return {kwy_words}
 
 
-#main
-@app.route("/interests",methods=[ "POST"])
-def interests():
-    desc = request.get_json()['desc']
-    name = request.get_json()['name']    
-    get_tfidf()
-    return kwy_words
+# @app.route("/interests",methods=[ "POST"])
+# def interests():
+#     desc = request.get_json()['desc']
+#     # name = request.get_json()['name']    
+#     get_tfidf()
+#     return kwy_words
 
+@app.route("/recommendation",methods=[ "GET"])
+def recommend_by_us(): 
+    user = "3d0e162e7n"
+    kw_list, desc_list, id_list, int_list = get_data(json_file)
+    indices = get_interests(user, 10)
+    return indices
 
-
-
-
-@app.route("/recommendation",methods=[ "POST"])
-def recommend_by_us():
-    desc = request.get_json()['descs']
-    name = request.get_json()['name']
-    names = request.get_json()['names']
-    
-    keywords  = request.get_json()['keyWords']    
-    get_tfidf(name)
-    get_kw
-    return kwy_words
-
-
-
-
+@app.route("/reco",methods=[ "POST"])
+def recommend_us_now():
+    # data =  request.get_json()
+    # print(data)
+    try:
+         x = requests.post('http://localhost:8080/recommendedContents')
+         print(x)
+    except err:
+        print(err)
+    # info = request.get_json()['info']    
+    # print(info,"infi")
+    # topics = predict_topic(desc);
+    return "done"
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=8085, debug=True)
+    app.run(host="localhost", port=8085)
