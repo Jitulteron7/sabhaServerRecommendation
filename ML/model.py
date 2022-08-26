@@ -65,6 +65,6 @@ def get_interests(interests):
 
 interests = ['Technology']
 
-print(get_tfidf('95skg5vx6m',5))
-print(get_kw('95skg5vx6m',5))
-print(get_interests(interests))
+# print(get_tfidf('95skg5vx6m',5))
+# print(get_kw('95skg5vx6m',5))
+# print(get_interests(interests))
