@@ -24,11 +24,13 @@ def get_data(json_file):
     kw_list = []
     id_list = []
     int_list = []
+    tit_list = []
     for i in range(len(json_file)):
         id = json_file[i]['_id']
         desc = json_file[i]['desc']
         kw = ' '.join(json_file[i]['keyWords'])
         interests = ' '.join(json_file[i]['interests'])
+        name = json_file[i]['name']
         desc_list.append(desc)
         id_list.append(id)
         kw_list.append(kw)
@@ -78,4 +80,4 @@ def get_interests(_id, num=10):
 
 # print(get_tfidf('95skg5vx6m',5))
 # print(get_kw('95skg5vx6m',5))
-# print(get_interests('3d0e162e7n',10))
+print(get_interests('3d0e162e7n',10))

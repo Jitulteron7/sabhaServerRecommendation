@@ -42,7 +42,7 @@ def keywrod_extraction():
 
 @app.route("/recommendation",methods=[ "GET"])
 def recommend_by_us(): 
-    user = "3d0e162e7n"
+    user = "58lhsejmgw"
     kw_list, desc_list, id_list, int_list = get_data(json_file)
     indices = get_interests(user, 10)
     return indices
